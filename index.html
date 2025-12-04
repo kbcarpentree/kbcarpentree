@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KB Carpentree | Framing & Carpentry</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      color: #222;
+      background: #fff;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: #ffffffee;
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid #eee;
+    }
+    .nav-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0.75rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    header img {
+      height: 52px;
+    }
+    nav a {
+      margin-left: 1rem;
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+    nav a:hover {
+      color: #5b4bff;
+    }
+    .nav-cta {
+      padding: 0.45rem 0.9rem;
+      border-radius: 999px;
+      border: 1px solid #5b4bff;
+      color: #fff;
+      background: #5b4bff;
+    }
+
+    .page-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 1.25rem;
+    }
+
+    /* HERO SLIDER */
+    .hero-slider {
+      position: relative;
+      min-height: 70vh;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    .hero-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      border: none;
+      background: rgba(0, 0, 0, 0.45);
+      color: #fff;
+      font-size: 2rem;
+      padding: 0.5rem 0.9rem;
+      cursor: pointer;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 5;
+    }
+    .hero-arrow-left {
+      left: 1rem;
+    }
+    .hero-arrow-right {
+      right: 1rem;
+    }
+    .hero-arrow:hover {
+      background: rgba(0, 0, 0, 0.7);
+    }
+
+    /* CTA BAND */
+    .cta-band {
+      background: #120f2a;
+      color: #fff;
+      padding: 2.5rem 0;
+      margin-top: -1px;
+    }
+    .cta-band-inner {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      align-items: flex-start;
+      justify-content: center;
+    }
+    .cta-band h2 {
+      margin: 0;
+      font-size: 2rem;
+      letter-spacing: 0.03em;
+    }
+    .cta-band p {
+      margin: 0;
+      max-width: 480px;
+      opacity: 0.9;
+    }
+
+    /* GRID + CARDS */
+    .page-title {
+      font-size: 1.35rem;
+      margin-top: 0;
+    }
+    .page-intro {
+      max-width: 480px;
+      font-size: 0.98rem;
+      opacity: 0.9;
+    }
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+    .card {
+      background: #f7f7f7;
+      padding: 1.4rem;
+      border-radius: 14px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    }
+    .card h3 {
+      margin-top: 0;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.6rem 1.3rem;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      border: 1px solid transparent;
+    }
+    .btn-primary {
+      background: #5b4bff;
+      color: #fff;
+      border-color: #5b4bff;
+    }
+
+    /* VIDEO GRID */
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1rem;
+      margin-bottom: 3rem;
+    }
+    .video-card {
+      background: #f7f7f7;
+      padding: 1rem;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    }
+    .video-card video {
+      width: 100%;
+      border-radius: 10px;
+      display: block;
+    }
+    .video-caption {
+      margin-top: 0.75rem;
+      font-size: 0.95rem;
+      opacity: 0.85;
+      text-align: center;
+    }
+
+    /* PHOTO GRID */
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+      margin-bottom: 3rem;
+    }
+    .photo-grid img {
+      width: 100%;
+      display: block;
+      border-radius: 10px;
+      object-fit: cover;
+      height: 220px;
+    }
+
+    footer {
+      border-top: 1px solid #eee;
+      margin-top: 2rem;
+    }
+    .footer-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 1.2rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      font-size: 0.85rem;
+    }
+    .footer-links a {
+      margin-left: 0.75rem;
+      text-decoration: none;
+      color: #666;
+    }
+
+    @media (min-width: 768px) {
+      .cta-band-inner {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .cta-band h2 {
+        font-size: 2.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav-inner">
+      <a href="index.html">
+        <!-- Replace LOGO_URL_HERE with your logo PNG/JPG from the album -->
+        <img src="LOGO_URL_HERE" alt="KB Carpentree Logo">
+      </a>
+      <nav>
+        <a href="about.html">About</a>
+        <a href="services.html">Services</a>
+        <a href="projects.html">Projects</a>
+        <a href="https://www.instagram.com/kbcarpentree" target="_blank" rel="noopener">Instagram</a>
+        <a href="contact.html" class="nav-cta">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO IMAGE SLIDER USING ALBUM PHOTOS -->
+    <div class="hero-slider">
+      <button class="hero-arrow hero-arrow-left" aria-label="Previous image">&#10094;</button>
+      <button class="hero-arrow hero-arrow-right" aria-label="Next image">&#10095;</button>
+    </div>
+
+
+    <!-- Walk Through Our Gallery -->
+    <section class="page-inner" style="padding: 3rem 0 1rem 0;">
+      <h2 class="page-title">Walk Through Our Gallery</h2>
+      <p class="page-intro">
+        Brief virtual tours of our job sites!
+      </p>
+
+      <div class="video-grid">
+        <div class="video-card">
+          <!-- Your provided MP4 -->
+          <video src="https://i.imgur.com/E8etdpR.mp4" controls playsinline></video>
+          <p class="video-caption">Timeless Timber Frame Pergola</p>
+        </div>
+
+        <div class="video-card">
+          <!-- Replace VIDEO_2_URL_HERE with another Imgur .mp4 when ready -->
+          <video src="https://i.imgur.com/ZTgmBrT.mp4" controls playsinline></video>
+          <p class="video-caption">Exterior Lavatory - PVC</p>
+        </div>
+
+        <div class="video-card">
+          <!-- Replace VIDEO_3_URL_HERE with another Imgur .mp4 when ready -->
+          <video src="https://i.imgur.com/XbRW36x.mp4" controls playsinline></video>
+          <p class="video-caption">Entertainment Space with PVC ceiling and faux beams</p>
+        </div>
+      </div>
+    </section>
+
+   
+   
+    <!-- SIMPLE NAV CARDS -->
+    <section class="page-inner">
+      <h2 class="page-title" style="margin-top:2rem;">Where do I get started?</h2>
+      <p class="page-intro" style="margin-bottom:1.5rem;">
+        Keep it simple. Choose what you want to see and we will take you there.
+      </p>
+
+      <div class="grid-3">
+        <div class="card">
+          <h3>About KB Carpentree</h3>
+          <p>Who we are, how we work, and what you can expect on your job site.</p>
+          <p style="margin-top:0.7rem;">
+            <a href="about.html">Learn more</a>
+          </p>
+        </div>
+        <div class="card">
+          <h3>What we build</h3>
+          <p>General contracting, framing, decks, garages, and timber work.</p>
+          <p style="margin-top:0.7rem;">
+            <a href="services.html">View services</a>
+          </p>
+        </div>
+        <div class="card">
+          <h3>Photos & recent work</h3>
+          <p>Browse a few recent projects to get a feel for our framing and exterior work.</p>
+          <p style="margin-top:0.7rem;">
+            <a href="projects.html">See projects</a>
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div>2025 KB Carpentree.</div>
+      <div class="footer-links">
+        <a href="about.html">About</a>
+        <a href="services.html">Services</a>
+        <a href="projects.html">Projects</a>
+        <a href="contact.html">Contact</a>
+        <a href="https://www.instagram.com/kbcarpentree" target="_blank" rel="noopener">Instagram</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JS SLIDER -->
+  <script>
+    // 1) HERO IMAGES: put your album image URLs here
+    //    Open each image in Imgur, right-click, "Copy image address" and paste below
+    const heroImages = [
+      "https://i.imgur.com/O0OlTWN.jpeg",
+      "https://i.imgur.com/oBmV0Jg.jpeg",
+      "https://i.imgur.com/NUR96pa.jpeg",
+      "https://i.imgur.com/DdxWAf4.jpeg"
+    ];
+
+    let heroIndex = 0;
+    const heroSlider = document.querySelector(".hero-slider");
+    const leftArrow = document.querySelector(".hero-arrow-left");
+    const rightArrow = document.querySelector(".hero-arrow-right");
+
+    function updateHeroImage() {
+      if (!heroSlider || heroImages.length === 0) return;
+      heroSlider.style.backgroundImage = "url('" + heroImages[heroIndex] + "')";
+    }
+
+    function showNextImage() {
+      heroIndex = (heroIndex + 1) % heroImages.length;
+      updateHeroImage();
+    }
+
+    function showPrevImage() {
+      heroIndex = (heroIndex - 1 + heroImages.length) % heroImages.length;
+      updateHeroImage();
+    }
+
+    if (heroSlider && heroImages.length > 0) {
+      updateHeroImage();
+      let heroInterval = setInterval(showNextImage, 10000);
+
+      if (leftArrow) {
+        leftArrow.addEventListener("click", function () {
+          showPrevImage();
+          clearInterval(heroInterval);
+          heroInterval = setInterval(showNextImage, 10000);
+        });
+      }
+
+      if (rightArrow) {
+        leftArrow.addEventListener("click", function () {
+          showPrevImage();
+          clearInterval(heroInterval);
+          heroInterval = setInterval(showNextImage, 10000);
+        });
+      }
+
+      if (rightArrow) {
+        rightArrow.addEventListener("click", function () {
+          showNextImage();
+          clearInterval(heroInterval);
+          heroInterval = setInterval(showNextImage, 10000);
+        });
+      }
+    }
+  </script>
+</body>
+</html>
