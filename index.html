@@ -2,27 +2,40 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>KB Carpentree | Framing & Carpentry</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
 
   <style>
+    :root{
+      --brand:#5b4bff;
+      --text:#222;
+      --muted:#666;
+      --card:#f7f7f7;
+      --border:#eee;
+      --headerBg: rgba(255,255,255,0.93);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
     body {
       margin: 0;
       font-family: 'Inter', sans-serif;
-      color: #222;
+      color: var(--text);
       background: #fff;
+      overflow-x: hidden;
+      -webkit-text-size-adjust: 100%;
     }
 
     header {
       position: sticky;
       top: 0;
       z-index: 20;
-      background: #ffffffee;
+      background: var(--headerBg);
       backdrop-filter: blur(8px);
-      border-bottom: 1px solid #eee;
+      border-bottom: 1px solid var(--border);
     }
+
     .nav-inner {
       max-width: 1080px;
       margin: 0 auto;
@@ -31,26 +44,57 @@
       align-items: center;
       justify-content: space-between;
       gap: 1rem;
+      position: relative;
     }
-    header img {
-      height: 52px;
-    }
+
+    header img { height: 52px; }
+
+    /* Desktop nav */
+    nav { display: flex; align-items: center; gap: 0.25rem; }
     nav a {
-      margin-left: 1rem;
+      display: inline-block;
       text-decoration: none;
       color: #333;
       font-weight: 500;
       font-size: 0.95rem;
+      padding: 0.6rem 0.85rem; /* better tap target */
+      border-radius: 10px;
+      -webkit-tap-highlight-color: transparent;
     }
-    nav a:hover {
-      color: #5b4bff;
-    }
+    nav a:hover { color: var(--brand); }
+
     .nav-cta {
-      padding: 0.45rem 0.9rem;
       border-radius: 999px;
-      border: 1px solid #5b4bff;
+      border: 1px solid var(--brand);
       color: #fff;
-      background: #5b4bff;
+      background: var(--brand);
+    }
+
+    /* Mobile menu button */
+    .menu-btn{
+      display: none;
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 12px;
+      padding: 0.55rem 0.7rem;
+      line-height: 1;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .menu-btn span{
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: #333;
+      margin: 4px 0;
+      border-radius: 999px;
+    }
+
+    /* Mobile nav panel */
+    .nav-links{
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
     }
 
     .page-inner {
@@ -66,7 +110,15 @@
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
+      touch-action: pan-y; /* allow vertical scroll but enables horizontal swipe detection */
     }
+    .hero-slider::after{
+      content:"";
+      position:absolute; inset:0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.25), rgba(0,0,0,0));
+      pointer-events:none;
+    }
+
     .hero-arrow {
       position: absolute;
       top: 50%;
@@ -74,60 +126,25 @@
       border: none;
       background: rgba(0, 0, 0, 0.45);
       color: #fff;
-      font-size: 2rem;
-      padding: 0.5rem 0.9rem;
       cursor: pointer;
       border-radius: 999px;
       display: flex;
       align-items: center;
       justify-content: center;
       z-index: 5;
-    }
-    .hero-arrow-left {
-      left: 1rem;
-    }
-    .hero-arrow-right {
-      right: 1rem;
-    }
-    .hero-arrow:hover {
-      background: rgba(0, 0, 0, 0.7);
-    }
 
-    /* CTA BAND */
-    .cta-band {
-      background: #120f2a;
-      color: #fff;
-      padding: 2.5rem 0;
-      margin-top: -1px;
+      /* mobile-friendly size */
+      width: 44px;
+      height: 44px;
+      font-size: 1.5rem;
     }
-    .cta-band-inner {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      align-items: flex-start;
-      justify-content: center;
-    }
-    .cta-band h2 {
-      margin: 0;
-      font-size: 2rem;
-      letter-spacing: 0.03em;
-    }
-    .cta-band p {
-      margin: 0;
-      max-width: 480px;
-      opacity: 0.9;
-    }
+    .hero-arrow-left { left: 0.75rem; }
+    .hero-arrow-right { right: 0.75rem; }
+    .hero-arrow:active { background: rgba(0, 0, 0, 0.7); }
 
     /* GRID + CARDS */
-    .page-title {
-      font-size: 1.35rem;
-      margin-top: 0;
-    }
-    .page-intro {
-      max-width: 480px;
-      font-size: 0.98rem;
-      opacity: 0.9;
-    }
+    .page-title { font-size: 1.35rem; margin-top: 0; }
+    .page-intro { max-width: 520px; font-size: 0.98rem; opacity: 0.9; }
     .grid-3 {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -135,29 +152,12 @@
       margin-bottom: 3rem;
     }
     .card {
-      background: #f7f7f7;
+      background: var(--card);
       padding: 1.4rem;
       border-radius: 14px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.06);
     }
-    .card h3 {
-      margin-top: 0;
-    }
-
-    .btn {
-      display: inline-block;
-      padding: 0.6rem 1.3rem;
-      border-radius: 999px;
-      text-decoration: none;
-      font-weight: 500;
-      font-size: 0.95rem;
-      border: 1px solid transparent;
-    }
-    .btn-primary {
-      background: #5b4bff;
-      color: #fff;
-      border-color: #5b4bff;
-    }
+    .card h3 { margin-top: 0; }
 
     /* VIDEO GRID */
     .video-grid {
@@ -168,7 +168,7 @@
       margin-bottom: 3rem;
     }
     .video-card {
-      background: #f7f7f7;
+      background: var(--card);
       padding: 1rem;
       border-radius: 12px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.08);
@@ -178,33 +178,9 @@
       border-radius: 10px;
       display: block;
     }
-    .video-caption {
-      margin-top: 0.75rem;
-      font-size: 0.95rem;
-      opacity: 0.85;
-      text-align: center;
-    }
+    .video-caption { margin-top: 0.75rem; font-size: 0.95rem; opacity: 0.85; text-align: center; }
 
-    /* PHOTO GRID */
-    .photo-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1rem;
-      margin-top: 1rem;
-      margin-bottom: 3rem;
-    }
-    .photo-grid img {
-      width: 100%;
-      display: block;
-      border-radius: 10px;
-      object-fit: cover;
-      height: 220px;
-    }
-
-    footer {
-      border-top: 1px solid #eee;
-      margin-top: 2rem;
-    }
+    footer { border-top: 1px solid var(--border); margin-top: 2rem; }
     .footer-inner {
       max-width: 1080px;
       margin: 0 auto;
@@ -214,80 +190,115 @@
       justify-content: space-between;
       gap: 1rem;
       font-size: 0.85rem;
+      flex-wrap: wrap;
     }
-    .footer-links a {
-      margin-left: 0.75rem;
-      text-decoration: none;
-      color: #666;
+    .footer-links a { margin-left: 0.75rem; text-decoration: none; color: var(--muted); }
+
+    /* ===== Mobile tweaks ===== */
+    @media (max-width: 820px) {
+      header img { height: 44px; }
+
+      .menu-btn{ display: inline-flex; align-items: center; justify-content: center; }
+      nav{ gap: 0; }
+      .nav-links{
+        position: absolute;
+        top: calc(100% + 8px);
+        left: 12px;
+        right: 12px;
+        background: #fff;
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 0.5rem;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0.25rem;
+
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        pointer-events: none;
+        transition: max-height 180ms ease, opacity 180ms ease;
+      }
+      .nav-links.open{
+        max-height: 420px;
+        opacity: 1;
+        pointer-events: auto;
+      }
+      .nav-links a{
+        margin: 0;
+        padding: 0.85rem 0.9rem;
+        border-radius: 12px;
+      }
+      .nav-cta{
+        text-align: center;
+      }
+
+      .hero-slider { min-height: 56vh; }
+      .hero-arrow-left { left: 0.5rem; }
+      .hero-arrow-right { right: 0.5rem; }
     }
 
-    @media (min-width: 768px) {
-      .cta-band-inner {
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-      }
-      .cta-band h2 {
-        font-size: 2.2rem;
-      }
+    @media (prefers-reduced-motion: reduce){
+      * { scroll-behavior: auto !important; }
     }
   </style>
 </head>
+
 <body>
   <header>
     <div class="nav-inner">
-      <a href="index.html">
-        <!-- Replace LOGO_URL_HERE with your logo PNG/JPG from the album -->
-        <img src="LOGO_URL_HERE" alt="KB Carpentree Logo">
+      <a href="index.html" aria-label="KB Carpentree Home">
+        <img src="https://i.imgur.com/OSuWJE7.png" alt="KB Carpentree Logo">
       </a>
-      <nav>
-        <a href="about.html">About</a>
-        <a href="services.html">Services</a>
-        <a href="projects.html">Projects</a>
-        <a href="https://www.instagram.com/kbcarpentree" target="_blank" rel="noopener">Instagram</a>
-        <a href="contact.html" class="nav-cta">Contact</a>
+
+      <nav aria-label="Primary">
+        <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
+          <span></span><span></span><span></span>
+        </button>
+
+        <div class="nav-links" id="navLinks">
+          <a href="about.html">About</a>
+          <a href="services.html">Services</a>
+          <a href="projects.html">Projects</a>
+          <a href="https://www.instagram.com/kbcarpentree" target="_blank" rel="noopener">Instagram</a>
+          <a href="contact.html" class="nav-cta">Contact</a>
+        </div>
       </nav>
     </div>
   </header>
 
   <main>
-    <!-- HERO IMAGE SLIDER USING ALBUM PHOTOS -->
-    <div class="hero-slider">
+    <!-- HERO IMAGE SLIDER -->
+    <div class="hero-slider" aria-label="Featured project photos">
       <button class="hero-arrow hero-arrow-left" aria-label="Previous image">&#10094;</button>
       <button class="hero-arrow hero-arrow-right" aria-label="Next image">&#10095;</button>
     </div>
 
-
     <!-- Walk Through Our Gallery -->
     <section class="page-inner" style="padding: 3rem 0 1rem 0;">
       <h2 class="page-title">Walk Through Our Gallery</h2>
-      <p class="page-intro">
-        Brief virtual tours of our job sites!
-      </p>
+      <p class="page-intro">Brief virtual tours of our job sites!</p>
 
       <div class="video-grid">
         <div class="video-card">
-          <!-- Your provided MP4 -->
-          <video src="https://i.imgur.com/E8etdpR.mp4" controls playsinline></video>
+          <video src="https://i.imgur.com/E8etdpR.mp4" controls playsinline preload="metadata"></video>
           <p class="video-caption">Timeless Timber Frame Pergola</p>
         </div>
 
         <div class="video-card">
-          <!-- Replace VIDEO_2_URL_HERE with another Imgur .mp4 when ready -->
-          <video src="https://i.imgur.com/ZTgmBrT.mp4" controls playsinline></video>
+          <video src="https://i.imgur.com/ZTgmBrT.mp4" controls playsinline preload="metadata"></video>
           <p class="video-caption">Exterior Lavatory - PVC</p>
         </div>
 
         <div class="video-card">
-          <!-- Replace VIDEO_3_URL_HERE with another Imgur .mp4 when ready -->
-          <video src="https://i.imgur.com/XbRW36x.mp4" controls playsinline></video>
+          <video src="https://i.imgur.com/XbRW36x.mp4" controls playsinline preload="metadata"></video>
           <p class="video-caption">Entertainment Space with PVC ceiling and faux beams</p>
         </div>
       </div>
     </section>
 
-   
-   
     <!-- SIMPLE NAV CARDS -->
     <section class="page-inner">
       <h2 class="page-title" style="margin-top:2rem;">Where do I get started?</h2>
@@ -299,23 +310,19 @@
         <div class="card">
           <h3>About KB Carpentree</h3>
           <p>Who we are, how we work, and what you can expect on your job site.</p>
-          <p style="margin-top:0.7rem;">
-            <a href="about.html">Learn more</a>
-          </p>
+          <p style="margin-top:0.7rem;"><a href="about.html">Learn more</a></p>
         </div>
+
         <div class="card">
           <h3>What we build</h3>
           <p>General contracting, framing, decks, garages, and timber work.</p>
-          <p style="margin-top:0.7rem;">
-            <a href="services.html">View services</a>
-          </p>
+          <p style="margin-top:0.7rem;"><a href="services.html">View services</a></p>
         </div>
+
         <div class="card">
           <h3>Photos & recent work</h3>
           <p>Browse a few recent projects to get a feel for our framing and exterior work.</p>
-          <p style="margin-top:0.7rem;">
-            <a href="projects.html">See projects</a>
-          </p>
+          <p style="margin-top:0.7rem;"><a href="projects.html">See projects</a></p>
         </div>
       </div>
     </section>
@@ -334,10 +341,36 @@
     </div>
   </footer>
 
-  <!-- JS SLIDER -->
   <script>
-    // 1) HERO IMAGES: put your album image URLs here
-    //    Open each image in Imgur, right-click, "Copy image address" and paste below
+    // ===== Mobile menu =====
+    const menuBtn = document.getElementById("menuBtn");
+    const navLinks = document.getElementById("navLinks");
+
+    function setMenu(open){
+      if (!menuBtn || !navLinks) return;
+      navLinks.classList.toggle("open", open);
+      menuBtn.setAttribute("aria-expanded", open ? "true" : "false");
+    }
+
+    if (menuBtn && navLinks){
+      menuBtn.addEventListener("click", () => {
+        const open = !navLinks.classList.contains("open");
+        setMenu(open);
+      });
+
+      // close menu when tapping a link
+      navLinks.querySelectorAll("a").forEach(a => {
+        a.addEventListener("click", () => setMenu(false));
+      });
+
+      // close if tapping outside
+      document.addEventListener("click", (e) => {
+        const within = e.target.closest(".nav-inner");
+        if (!within) setMenu(false);
+      });
+    }
+
+    // ===== HERO SLIDER =====
     const heroImages = [
       "https://i.imgur.com/O0OlTWN.jpeg",
       "https://i.imgur.com/oBmV0Jg.jpeg",
@@ -365,33 +398,51 @@
       updateHeroImage();
     }
 
+    function restartInterval(intervalRef){
+      clearInterval(intervalRef.value);
+      intervalRef.value = setInterval(showNextImage, 10000);
+    }
+
     if (heroSlider && heroImages.length > 0) {
       updateHeroImage();
-      let heroInterval = setInterval(showNextImage, 10000);
+      const intervalRef = { value: setInterval(showNextImage, 10000) };
 
       if (leftArrow) {
         leftArrow.addEventListener("click", function () {
           showPrevImage();
-          clearInterval(heroInterval);
-          heroInterval = setInterval(showNextImage, 10000);
-        });
-      }
-
-      if (rightArrow) {
-        leftArrow.addEventListener("click", function () {
-          showPrevImage();
-          clearInterval(heroInterval);
-          heroInterval = setInterval(showNextImage, 10000);
+          restartInterval(intervalRef);
         });
       }
 
       if (rightArrow) {
         rightArrow.addEventListener("click", function () {
           showNextImage();
-          clearInterval(heroInterval);
-          heroInterval = setInterval(showNextImage, 10000);
+          restartInterval(intervalRef);
         });
       }
+
+      // Swipe support on touch devices
+      let startX = 0;
+      let startY = 0;
+
+      heroSlider.addEventListener("touchstart", (e) => {
+        const t = e.touches[0];
+        startX = t.clientX;
+        startY = t.clientY;
+      }, { passive: true });
+
+      heroSlider.addEventListener("touchend", (e) => {
+        const t = e.changedTouches[0];
+        const dx = t.clientX - startX;
+        const dy = t.clientY - startY;
+
+        // Only treat as swipe if it's mostly horizontal
+        if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
+          if (dx < 0) showNextImage();
+          else showPrevImage();
+          restartInterval(intervalRef);
+        }
+      }, { passive: true });
     }
   </script>
 </body>
